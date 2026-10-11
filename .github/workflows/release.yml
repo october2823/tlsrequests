@@ -41,10 +41,12 @@ jobs:
         run: sh ./scripts/build-native.sh
       - if: runner.os != 'Linux'
         shell: bash
-        run: python -m pip install setuptools wheel twine
+        run: python -m pip install setuptools wheel
       - if: runner.os != 'Linux'
         shell: bash
         run: python setup.py bdist_wheel
+      - shell: bash
+        run: python -m pip install twine
       - shell: bash
         run: python -m twine check dist/*
       - uses: actions/upload-artifact@v4
