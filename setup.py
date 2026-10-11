@@ -7,6 +7,8 @@ class BinaryWheel(bdist_wheel):
         self.root_is_pure = False
 
     def get_tag(self):
-        return "py3", "none", self.plat_name.replace("-", "_")
+        from sysconfig import get_platform
+        platform = self.plat_name or get_platform()
+        return "py3", "none", platform.replace("-", "_")
 
 setup(cmdclass={"bdist_wheel": BinaryWheel})
