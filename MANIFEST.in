@@ -1,0 +1,2 @@
+recursive-include native *.go go.mod go.sum
+include README.md LICENSE
