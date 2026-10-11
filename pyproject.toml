@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,6 +8,10 @@ version = "0.1.0"
 description = "Async Python facade for bogdanfinn/tls-client"
 requires-python = ">=3.10"
 license = {text = "MIT"}
+readme = "README.md"
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=0.24"]
 
 [tool.setuptools]
 packages = ["tlsrequests"]
