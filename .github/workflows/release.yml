@@ -32,7 +32,7 @@ jobs:
         run: ./scripts/build-native.ps1
       - if: runner.os == 'Linux'
         shell: bash
-        run: sudo apt-get update && sudo apt-get install -y docker.io
+        run: docker version
       - if: runner.os == 'Linux'
         shell: bash
         run: sh ./scripts/build-linux-wheel.sh
