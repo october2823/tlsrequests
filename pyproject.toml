@@ -11,3 +11,4 @@ license = {text = "MIT"}
 
 [tool.setuptools]
 packages = ["tlsrequests"]
+package-data = { tlsrequests = ["py.typed", "tlsrequests.so", "tlsrequests.dylib", "tlsrequests.dll"] }
