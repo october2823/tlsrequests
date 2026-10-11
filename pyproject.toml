@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=70", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -15,4 +15,7 @@ test = ["pytest>=8", "pytest-asyncio>=0.24"]
 
 [tool.setuptools]
 packages = ["tlsrequests"]
-package-data = { tlsrequests = ["py.typed", "tlsrequests.so", "tlsrequests.dylib", "tlsrequests.dll"] }
+include-package-data = true
+
+[tool.setuptools.package-data]
+tlsrequests = ["py.typed", "*.so", "*.dylib", "*.dll"]
