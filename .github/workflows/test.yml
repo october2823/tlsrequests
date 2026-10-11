@@ -9,6 +9,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+    env:
+      TLSREQUESTS_LIBRARY: ${{ runner.os == 'Windows' && 'tlsrequests/tlsrequests.dll' || runner.os == 'macOS' && 'tlsrequests/tlsrequests.dylib' || 'tlsrequests/tlsrequests.so' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

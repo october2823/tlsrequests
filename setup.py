@@ -7,6 +7,6 @@ class BinaryWheel(bdist_wheel):
         self.root_is_pure = False
 
     def get_tag(self):
-        return "py3", "none", self.plat_name
+        return "py3", "none", self.plat_name.replace("-", "_")
 
 setup(cmdclass={"bdist_wheel": BinaryWheel})
