@@ -19,13 +19,21 @@ func tlsrequests_call(input *C.char) *C.char {
  client, session, withSession, clientErr := src.CreateClient(in)
  if clientErr != nil { return C.CString(`{"status":0,"body":"client creation failed"}`) }
  req, clientErr := src.BuildRequest(in)
- if clientErr != nil { return C.CString(`{"status":0,"body":"request construction failed"}`) }
- var err error
+ if clientErr != nil {
+  if withSession { src.RemoveSession(session) }
+  b,_:=json.Marshal(src.Response{Status:0, Body:clientErr.Error()}); return C.CString(string(b))
+ }
  resp, err := client.Do(req)
- if err != nil { b,_:=json.Marshal(src.Response{Status:0, Body:err.Error()}); return C.CString(string(b)) }
+ if err != nil {
+  if withSession { src.RemoveSession(session) }
+  b,_:=json.Marshal(src.Response{Status:0, Body:err.Error()}); return C.CString(string(b))
+ }
  cookies := client.GetCookies(resp.Request.URL)
  out, clientErr := src.BuildResponse(session, withSession, resp, cookies, in)
- if clientErr != nil { b,_:=json.Marshal(src.Response{Status:0, Body:clientErr.Error()}); return C.CString(string(b)) }
+ if clientErr != nil {
+  if withSession { src.RemoveSession(session) }
+  b,_:=json.Marshal(src.Response{Status:0, Body:clientErr.Error()}); return C.CString(string(b))
+ }
  b,err:=json.Marshal(out); if err!=nil { return C.CString(`{"status":0,"body":"response encoding failed"}`) }; return C.CString(string(b))
 }
 
