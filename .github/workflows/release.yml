@@ -13,17 +13,39 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
-            artifact: linux
+            artifact: linux-py312
+            python: "3.12"
+          - os: ubuntu-22.04
+            artifact: linux-py313
+            python: "3.13"
+          - os: ubuntu-22.04
+            artifact: linux-py314
+            python: "3.14"
           - os: windows-latest
-            artifact: windows
+            artifact: windows-py312
+            python: "3.12"
+          - os: windows-latest
+            artifact: windows-py313
+            python: "3.13"
+          - os: windows-latest
+            artifact: windows-py314
+            python: "3.14"
           - os: macos-14
-            artifact: macos
+            artifact: macos-py312
+            python: "3.12"
+          - os: macos-14
+            artifact: macos-py313
+            python: "3.13"
+          - os: macos-14
+            artifact: macos-py314
+            python: "3.14"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python }}
+          allow-prereleases: true
       - uses: actions/setup-go@v5
         with:
           go-version: "1.24.x"
