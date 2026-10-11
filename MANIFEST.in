@@ -1,2 +1,4 @@
 recursive-include native *.go go.mod go.sum
-include README.md LICENSE
+recursive-include scripts *.ps1 *.sh
+recursive-include tlsrequests *.py *.typed *.so *.dylib *.dll
+include README.md USAGE.md LICENSE UPSTREAM-LICENSE
