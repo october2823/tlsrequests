@@ -7,7 +7,7 @@ curl -fsSL https://go.dev/dl/go1.24.13.linux-amd64.tar.gz -o /tmp/go.tar.gz
 rm -rf /usr/local/go
 tar -C /usr/local -xzf /tmp/go.tar.gz
 export PATH=/usr/local/go/bin:/opt/python/cp312-cp312/bin:$PATH
-/usr/local/go/bin/go -C native build -buildmode=c-shared -o tlsrequests/tlsrequests.so .
+/usr/local/go/bin/go -C native build -buildvcs=false -buildmode=c-shared -o tlsrequests/tlsrequests.so .
 rm -f tlsrequests/tlsrequests.h
 /opt/python/cp312-cp312/bin/python -m pip install --disable-pip-version-check setuptools wheel
 /opt/python/cp312-cp312/bin/python setup.py bdist_wheel
