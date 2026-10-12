@@ -1,11 +1,11 @@
-# YumeTlsClient / tlsrequests
+# YumeTlsClient / yumeclient
 
 ## Установка
 
 Для полноценного `pip install` нужен wheel под ОС и архитектуру. В релизном workflow wheels собираются отдельно для Windows, Linux и macOS и содержат Go shared library. После настройки PyPI Trusted Publishing и создания GitHub Release их можно установить так:
 
 ```sh
-python -m pip install tlsrequests
+python -m pip install yumeclient
 ```
 
 Для локальной сборки нужны Go 1.24+, cgo и C-компилятор. Windows также требует MinGW-w64:
@@ -13,7 +13,7 @@ python -m pip install tlsrequests
 ```powershell
 $env:CGO_ENABLED = "1"
 $env:CC = "x86_64-w64-mingw32-gcc"
-go -C native build -buildmode=c-shared -o ../tlsrequests/tlsrequests.dll .
+go -C native build -buildmode=c-shared -o ../yumeclient/yumeclient.dll .
 python -m pip install -e .
 ```
 
@@ -23,7 +23,7 @@ Linux/macOS: `sh scripts/build-native.sh`, затем `python -m pip install -e 
 
 ```python
 import asyncio
-from tlsrequests import Session, Profiles
+from yumeclient import Session, Profiles
 
 async def main():
     async with Session(client_identifier=Profiles.CHROME_152, timeout=20) as session:

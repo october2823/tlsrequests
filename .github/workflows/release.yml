@@ -13,6 +13,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
+            artifact: linux-py311
+            python: "3.11.6"
+          - os: ubuntu-22.04
             artifact: linux-py312
             python: "3.12"
           - os: ubuntu-22.04
@@ -22,6 +25,9 @@ jobs:
             artifact: linux-py314
             python: "3.14"
           - os: windows-latest
+            artifact: windows-py311
+            python: "3.11.6"
+          - os: windows-latest
             artifact: windows-py312
             python: "3.12"
           - os: windows-latest
@@ -30,6 +36,9 @@ jobs:
           - os: windows-latest
             artifact: windows-py314
             python: "3.14"
+          - os: macos-14
+            artifact: macos-py311
+            python: "3.11.6"
           - os: macos-14
             artifact: macos-py312
             python: "3.12"
@@ -80,7 +89,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/tlsrequests
+      url: https://pypi.org/p/yumeclient
     steps:
       - uses: actions/download-artifact@v4
         with:

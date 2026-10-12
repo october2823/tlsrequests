@@ -1,7 +1,7 @@
 import asyncio
 import inspect
 import pytest
-from tlsrequests import (ALL_IDENTIFIERS, AsyncSession, CookieJar, Profiles, Response,
+from yumeclient import (ALL_IDENTIFIERS, AsyncSession, CookieJar, Profiles, Response,
                          Session, SessionConfigurationError, encode_multipart, find)
 
 

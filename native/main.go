@@ -12,8 +12,8 @@ import (
  src "github.com/bogdanfinn/tls-client/cffi_src"
 )
 
-//export tlsrequests_call
-func tlsrequests_call(input *C.char) *C.char {
+//export yumeclient_call
+func yumeclient_call(input *C.char) *C.char {
  var in src.RequestInput
  if err := json.Unmarshal([]byte(C.GoString(input)), &in); err != nil { return C.CString(`{"status":0,"body":"invalid input"}`) }
  client, session, withSession, clientErr := src.CreateClient(in)
@@ -37,9 +37,9 @@ func tlsrequests_call(input *C.char) *C.char {
  b,err:=json.Marshal(out); if err!=nil { return C.CString(`{"status":0,"body":"response encoding failed"}`) }; return C.CString(string(b))
 }
 
-//export tlsrequests_close
-func tlsrequests_close(session *C.char) { src.RemoveSession(C.GoString(session)) }
+//export yumeclient_close
+func yumeclient_close(session *C.char) { src.RemoveSession(C.GoString(session)) }
 
-//export tlsrequests_free
-func tlsrequests_free(p *C.char) { C.free(unsafe.Pointer(p)) }
+//export yumeclient_free
+func yumeclient_free(p *C.char) { C.free(unsafe.Pointer(p)) }
 func main() {}

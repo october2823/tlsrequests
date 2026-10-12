@@ -1,4 +1,4 @@
-module github.com/kovak/tlsrequests
+module github.com/kovak/yumeclient
 
 go 1.24.1
 

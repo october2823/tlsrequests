@@ -28,15 +28,15 @@ class SessionConfigurationError(TLSClientError, ValueError): pass
 
 _poolLock = threading.Lock()
 _poolSize = 64
-_executor = ThreadPoolExecutor(max_workers=_poolSize, thread_name_prefix="tlsrequests")
+_executor = ThreadPoolExecutor(max_workers=_poolSize, thread_name_prefix="yumeclient")
 _library: ctypes.CDLL | None = None
 
 
 def _libraryPath() -> Path:
-    configured = os.getenv("TLSREQUESTS_LIBRARY")
+    configured = os.getenv("YUMECLIENT_LIBRARY")
     if configured: return Path(configured)
     suffix = {"Windows": ".dll", "Darwin": ".dylib"}.get(platform.system(), ".so")
-    return Path(__file__).with_name("tlsrequests" + suffix)
+    return Path(__file__).with_name("yumeclient" + suffix)
 
 
 def _native() -> ctypes.CDLL:
@@ -46,25 +46,25 @@ def _native() -> ctypes.CDLL:
             path = _libraryPath()
             if not path.is_file(): raise TLSClientError(f"Native library not found: {path}; build native/ with Go 1.24+ and cgo")
             lib = ctypes.CDLL(str(path))
-            lib.tlsrequests_call.argtypes = [ctypes.c_char_p]; lib.tlsrequests_call.restype = ctypes.c_void_p
-            lib.tlsrequests_close.argtypes = [ctypes.c_char_p]; lib.tlsrequests_close.restype = None
-            lib.tlsrequests_free.argtypes = [ctypes.c_void_p]; lib.tlsrequests_free.restype = None
+            lib.yumeclient_call.argtypes = [ctypes.c_char_p]; lib.yumeclient_call.restype = ctypes.c_void_p
+            lib.yumeclient_close.argtypes = [ctypes.c_char_p]; lib.yumeclient_close.restype = None
+            lib.yumeclient_free.argtypes = [ctypes.c_void_p]; lib.yumeclient_free.restype = None
             _library = lib
         return _library
 
 
 def _call(payload: dict[str, Any]) -> dict[str, Any]:
     lib = _native()
-    pointer = lib.tlsrequests_call(json.dumps(payload, separators=(",", ":")).encode())
+    pointer = lib.yumeclient_call(json.dumps(payload, separators=(",", ":")).encode())
     if not pointer: raise RequestError("native client returned a null response")
     try: result = json.loads(ctypes.string_at(pointer).decode("utf-8"))
-    finally: lib.tlsrequests_free(pointer)
+    finally: lib.yumeclient_free(pointer)
     if not result.get("status"): raise RequestError(result.get("body", "request failed"))
     return result
 
 
 def _closeNative(sessionId: str) -> None:
-    _native().tlsrequests_close(sessionId.encode())
+    _native().yumeclient_close(sessionId.encode())
 
 
 def _version(value: Any) -> str:
@@ -312,7 +312,7 @@ class AsyncSession(Session):
             oldPool = _executor
             if getattr(oldPool, "_threads", set()): raise SessionConfigurationError("configure executor before starting requests")
             _poolSize = workers
-            _executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="tlsrequests")
+            _executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="yumeclient")
             oldPool.shutdown(wait=False)
 
 

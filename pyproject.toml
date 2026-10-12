@@ -3,10 +3,10 @@ requires = ["setuptools>=70", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tlsrequests"
-version = "0.1.5"
+name = "yumeclient"
+version = "0.1.6"
 description = "Async Python facade for bogdanfinn/tls-client"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = "MIT"
 readme = "README.md"
 
@@ -14,8 +14,8 @@ readme = "README.md"
 test = ["pytest>=8", "pytest-asyncio>=0.24"]
 
 [tool.setuptools]
-packages = ["tlsrequests"]
+packages = ["yumeclient"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-tlsrequests = ["py.typed", "*.so", "*.dylib", "*.dll"]
+yumeclient = ["py.typed", "*.so", "*.dylib", "*.dll"]
