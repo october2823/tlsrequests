@@ -7,7 +7,7 @@ name = "yumeclient"
 version = "0.1.6"
 description = "Async Python facade for bogdanfinn/tls-client"
 requires-python = ">=3.11"
-license = "MIT"
+license = {text = "MIT"}
 readme = "README.md"
 
 [project.optional-dependencies]
